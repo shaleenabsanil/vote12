@@ -1,0 +1,272 @@
+<!-- vote.php -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Voting System</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Same CSS styles as before */
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background: linear-gradient(135deg, #1a1a1a, #2e2e2e);
+      color: white;
+      margin: 0;
+      height: 100vh;
+      overflow-x: hidden;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 30px;
+      animation: slideIn 1s ease-out;
+    }
+
+    button {
+      padding: 12px 30px;
+      cursor: pointer;
+      margin: 10px;
+      font-size: 1.3em;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 8px;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+      transform: scale(1.05);
+    }
+
+    input {
+      display: block;
+      margin: 10px auto;
+      padding: 12px;
+      width: 260px;
+      font-size: 1.1em;
+      border-radius: 6px;
+      border: 1px solid #555;
+      background-color: #3e3e3e;
+      color: white;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #4CAF50;
+    }
+
+    #doneButton { display: none; }
+    #loginForm, #voteSection, #voteOptions, #liveCountingSection, #infoSection {
+      display: none;
+      margin-top: 30px;
+    }
+
+    .vote-buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .vote-buttons button {
+      width: 220px;
+      background-color: #f44336;
+    }
+
+    .vote-buttons button:hover {
+      background-color: #d32f2f;
+    }
+
+    ul { padding: 0; }
+    li { margin: 10px 0; }
+    iframe {
+      width: 100%;
+      height: 800px;
+      border: none;
+      margin-top: 20px;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideIn {
+      from { transform: translateY(-40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Voting System</h1>
+
+  <div id="mainOptions">
+    <button onclick="showOptions()">Cast Vote</button>
+  </div>
+
+  <div id="voteOptions">
+    <h2>Select an Option</h2>
+    <button onclick="showLoginForm()">Login</button>
+    <button onclick="liveCounting()">Live Counting</button>
+    <button onclick="showInfo()">Info</button>
+  </div>
+
+  <div id="loginForm">
+    <h2>Login to Vote</h2>
+    <input type="text" id="voterId" placeholder="Voter ID" required>
+    <input type="text" id="aadhaar" placeholder="Aadhaar Number" required>
+    <input type="email" id="email" placeholder="Email ID" required>
+    <button onclick="sendLoginEmail()">Login</button>
+    <button id="doneButton" onclick="doneVoting()">Done</button>
+  </div>
+
+  <div id="voteSection">
+    <h2>Cast Your Vote</h2>
+    <div class="vote-buttons">
+      <button onclick="recordVote('BJP')">BJP</button>
+      <button onclick="recordVote('Congress')">Congress</button>
+      <button onclick="recordVote('ABC')">ABC</button>
+      <button onclick="recordVote('Other')">Other</button>
+    </div>
+  </div>
+
+  <div id="liveCountingSection">
+    <h2>Live Counting</h2>
+    <ul style="list-style: none; font-size: 20px;">
+      <li>BJP: <span id="countBJP">0</span></li>
+      <li>Congress: <span id="countCongress">0</span></li>
+      <li>ABC: <span id="countABC">0</span></li>
+      <li>Other: <span id="countOther">0</span></li>
+    </ul>
+    <button onclick="closeLiveCounting()">Close</button>
+  </div>
+
+  <div id="infoSection">
+    <h2>Nomination Panel</h2>
+    <iframe src="info.php"></iframe>
+    <button onclick="closeInfo()">Close Info</button>
+  </div>
+
+  <script>
+    console.log("hsjsjsj");
+fetch('/results', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }).then(response => response.json())
+        .then(data => {
+          console.log("----------------");
+          console.log(data);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    
+
+    emailjs.init("L-AKjVryGzqDXbMRe");
+
+    let voteCounts = { BJP: 0, Congress: 0, ABC: 0, Other: 0 };
+
+    function showOptions() {
+      document.getElementById("mainOptions").style.display = "none";
+      document.getElementById("voteOptions").style.display = "block";
+    }
+
+    function showLoginForm() {
+      document.getElementById("voteOptions").style.display = "none";
+      document.getElementById("loginForm").style.display = "block";
+    }
+
+    function liveCounting() {
+      document.getElementById("voteOptions").style.display = "none";
+      document.getElementById("liveCountingSection").style.display = "block";
+      document.getElementById("countBJP").textContent = voteCounts.BJP;
+      document.getElementById("countCongress").textContent = voteCounts.Congress;
+      document.getElementById("countABC").textContent = voteCounts.ABC;
+      document.getElementById("countOther").textContent = voteCounts.Other;
+    }
+
+    function closeLiveCounting() {
+      document.getElementById("liveCountingSection").style.display = "none";
+      document.getElementById("voteOptions").style.display = "block";
+    }
+
+    function showInfo() {
+      document.getElementById("voteOptions").style.display = "none";
+      document.getElementById("infoSection").style.display = "block";
+    }
+
+    function closeInfo() {
+      document.getElementById("infoSection").style.display = "none";
+      document.getElementById("voteOptions").style.display = "block";
+    }
+
+    function sendLoginEmail() {
+      const voterId = document.getElementById("voterId").value;
+      const aadhaar = document.getElementById("aadhaar").value;
+      const email = document.getElementById("email").value;
+
+      if (!voterId || !aadhaar || !email) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      emailjs.send("service_sdv0pwn", "template_39sa02n", {
+        voter_id: voterId,
+        aadhaar: aadhaar,
+        email: email
+      }).then(function(response) {
+        alert("Login successful! A confirmation email has been sent.");
+        document.getElementById("doneButton").style.display = "inline-block";
+      }, function(error) {
+        alert("Failed to send email. Please try again.");
+        console.log(error);
+      });
+    }
+
+    function doneVoting() {
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("voteSection").style.display = "block";
+    }
+
+    function recordVote(party) {
+      const aadhaar = document.getElementById("aadhaar").value;
+      const email = document.getElementById("email").value;
+
+      const candidateMap = {
+        BJP: 1,
+        Congress: 2,
+        ABC: 3,
+        Other: 4
+      };
+
+      
+
+      fetch('vote_process.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          aadhaar: aadhaar,
+          email: email,
+          candidateId: candidateMap[party]
+        })
+      }).then(response => response.json())
+        .then(data => {
+          alert("Vote recorded for " + party + " ✅");
+          document.getElementById("voteSection").innerHTML = "<h2>Thank you! Your vote has been recorded.</h2>";
+        })
+        .catch(err => {
+          alert("Failed to record vote. Please try again.");
+          console.error(err);
+        });
+    }
+  </script>
+
+</body>
+</html>

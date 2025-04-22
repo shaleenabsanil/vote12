@@ -1,0 +1,130 @@
+<!-- info.php -->
+<?php // This is a direct copy of info.html with a .php extension ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nomination Panel</title>
+
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu|Raleway|Oswald|Roboto+Condensed&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Roboto Condensed', sans-serif;
+    }
+    .headerFont { font-family: 'Ubuntu', sans-serif; font-size: 24px; }
+    .subFont { font-family: 'Raleway', sans-serif; font-size: 14px; }
+    .specialHead { font-family: 'Oswald', sans-serif; }
+    .normalFont { font-family: 'Roboto Condensed', sans-serif; }
+    .candidate-card {
+      background-color: #ffffff;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .candidate-card:hover { transform: scale(1.02); }
+    .candidate-img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+    .navbar-brand { font-weight: bold; }
+    h4 { font-weight: 600; }
+    ul { text-align: left; padding-left: 20px; }
+    hr { border-top: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+    <div class="container">
+      <div class="navbar-header">
+        <a href="cpanel.php" class="navbar-brand headerFont text-lg"><strong>eVoting</strong></a>
+      </div>
+      <div class="collapse navbar-collapse" id="example-nav-collapse">
+        <ul class="nav navbar-nav"></ul>
+        <button type="submit" class="btn btn-success navbar-right navbar-btn"><strong>Admin Panel</strong></button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" style="padding-top: 100px;">
+    <div class="row text-center">
+      <h2 class="headerFont">Nomination Panel</h2>
+      <p class="subFont">Meet the candidates</p>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 col-md-3">
+        <div class="candidate-card">
+          <img src="modi.jpeg" alt="Narendra Modi" class="img-thumbnail candidate-img">
+          <h4>Narendra Modi</h4>
+          <p>Leader of the Bharatiya Janata Party, former CM of Gujarat, MP from Varanasi.</p>
+          <hr>
+          <ul>
+            <li>Born: September 17, 1950</li>
+            <li>Spouse: Jashodaben Modi</li>
+            <li>Education: Gujarat Univ., Univ. of Delhi</li>
+            <li>Parents: Heeraben & Damodardas Modi</li>
+            <li>Awards: CNN-IBN Indian of the Year</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-md-3">
+        <div class="candidate-card">
+          <img src="rahul.jpeg" alt="Rahul Gandhi" class="img-thumbnail candidate-img">
+          <h4>Rahul Gandhi</h4>
+          <p>Vice-President of INC, Chairperson of Youth Congress & NSUI.</p>
+          <hr>
+          <ul>
+            <li>Born: June 19, 1970</li>
+            <li>Parents: Sonia & Rajiv Gandhi</li>
+            <li>Siblings: Priyanka Gandhi</li>
+            <li>Education: Trinity College, Cambridge</li>
+            <li>Awards: CNN-IBN Indian of the Year</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-md-3">
+        <div class="candidate-card">
+          <img src="jagan.jpg" alt="YS Jagan Mohan Reddy" class="img-thumbnail candidate-img">
+          <h4>YS Jagan Mohan Reddy</h4>
+          <p>Current CM of Andhra Pradesh, prominent Telugu politician.</p>
+          <hr>
+          <ul><li>Born: August 16, 1968</li></ul>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-md-3">
+        <div class="candidate-card">
+          <img src="pk.jpg" alt="Pavan Kalyan" class="img-thumbnail candidate-img">
+          <h4>Pavan Kalyan</h4>
+          <p>Indian politician, film actor and leader of Jana Sena Party.</p>
+          <hr>
+          <ul>
+            <li>Born: Sept 22, 1965</li>
+            <li>Full Name: Pavan Kalyan</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+</body>
+</html>
